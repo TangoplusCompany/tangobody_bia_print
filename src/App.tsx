@@ -1,122 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
-
+import logoWhite from './assets/logo_white.png';
+import BodyTypeChart from './components/right/BodyTypeChart';
+import Recommend from './components/right/Recommend';
+import MainCards from './components/left/MainCards';
+import Composition from './components/left/Composition';
+import BodyModel from './components/left/BodyModel';
+import TrendGraph from './components/left/TrendGraph';
+import BodyBenchMark from './components/right/BodyBenchMark';
+import BodyScore from './components/right/BodyScore';
 function App() {
-  const [count, setCount] = useState(0)
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <div className="w-[210mm] mx-auto h-full p-0 m-0">
+      <div className="flex justify-end w-full p-0 m-0">
         <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={handlePrint}
+          className="px-4 py-2 bg-blue-600 my-4 text-white rounded-lg hover:bg-blue-700 print:hidden"
         >
-          Count is {count}
+          인쇄하기
         </button>
-      </section>
+      </div>
+      
 
-      <div className="ticks"></div>
+      <div className="a4-page flex flex-col bg-white overflow-hidden bg-sub-400">
+        <div className='flex justify-between h-16 w-full bg-sub-400 p-2 gap-4'>
+          <div className='flex gap-4'>
+            <img 
+              src={logoWhite} 
+              alt="하얀색 로고" 
+              className="flex w-8 h-fit my-auto" 
+            />
+            <div className='flex text-center py-1.5 text-white text-2xl font-bold'>Tango Body Report</div>
+          </div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          <div className='justify-center px-2 bg-white flex flex-col rounded-md text-[12px] text-center'>
+            <div>
+              이름: 000 성별: 남 신장:184cm 나이: 만 30세
+            </div>
+            <div className='h-[1px] w-full bg-sub-400'></div>
+            <div>
+              현재 검사일: 2026-05-07 이전 검사일 2026-05-01
+            </div>
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* 🥘🥘🥘🥘🥘🥘🍲🍲🍲🍲body🍲🍲🍲🍲🍝🍝🍝🍝🍝🍝 */}
+        <div className='flex flex-1 w-full py-4 gap-2'>
+          {/* 🥘🥘🥘🥘 left 🥘🥘🥘🥘 */}
+          <div className='grid grid-rows-[25%_25%_25%_25%] w-2/3 gap-2 '>
+            <MainCards />
+            <Composition />
+            <BodyModel />
+            <TrendGraph />
+          </div>
+
+          {/* 🍲🍲🍲🍲 right 🍲🍲🍲🍲 */}
+          <div className='grid grid-rows-[30%_20%_25%_25%] w-1/3 rounded-xl shadow'>
+            <BodyBenchMark />
+
+            {/* 2번째 컴포넌트 */}
+            <BodyScore />
+            
+            {/* 3번째 컴포넌트 */}
+            <div>
+              <Recommend />
+            </div>
+            
+            {/* 4번째 컴포넌트 */}
+            <div className='mt-auto mb-4'>
+              <BodyTypeChart />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-
 export default App
