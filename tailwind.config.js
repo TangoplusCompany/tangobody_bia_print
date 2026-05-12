@@ -8,19 +8,67 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"SUIT Variable"', 'sans-serif'],
+        bebas: ['"Bebas Neue"', 'cursive'],
       },
       colors: {
-        'accent' : '#2660E9',
-        'redd': '#FF4438',
+        'accent' : '#5B93FF',
+        'blackk' : '#4C4C4C',
+        'half-blackk' : '#7A828A',
+        'redd': '#FF766C',
+        'orangee' : '#FFA546',
         'sub': {
           800: '#454545',
+          600: '#7E7E7E',
           400: '#AEAEAE',
+          300: '#C1C1C1',
           200: '#DBDBDB',
-          100: '#F4F4F4',
-        }
-      }
+          100: '#F4F4F499',
+        },
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          "1": "hsl(var(--chart-1))",
+          "2": "hsl(var(--chart-2))",
+          "3": "hsl(var(--chart-3))",
+          "4": "hsl(var(--chart-4))",
+          "5": "hsl(var(--chart-5))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 }
 

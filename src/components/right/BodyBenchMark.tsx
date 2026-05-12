@@ -60,7 +60,6 @@ export default function BodyBenchMark() {
 
           </div>
         </div>
-
       </div>
     </div>
   );
