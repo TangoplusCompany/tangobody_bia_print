@@ -17,7 +17,7 @@ const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
   const statusLabel = labelMap[grade as keyof typeof labelMap];
   // const leftPos = posMap[grade as keyof typeof posMap];
   return (
-    <div className="bg-sub-100 border border-sub-200 rounded-sm py-1 flex flex-col items-center gap-2">
+    <div className="bg-sub-100 border border-sub-200 rounded-sm py-1 flex flex-col items-center gap-1 leading-[2.0]">
       {/* 라벨 */}
       <span className="text-[10px] font-bold text-sub-800 mb-0.5">{label}</span>
       
@@ -70,7 +70,7 @@ export default function MainAnalysis({
   return (
     <div className="grid grid-cols-2 w-full mt-4 gap-4">
       
-      <div className="flex flex-col h-full justify-center gap-6">
+      <div className="grid grid-rows-[40%_60%] h-full justify-center">
         <div className="grid grid-cols-[25%_75%] gap-2 items-center">
           <div className="w-16 h-16 bg-sub-100 rounded-3xl border-2 border-sub-200 flex justify-center">
             <span 
@@ -87,7 +87,7 @@ export default function MainAnalysis({
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center">
           <div className="grid grid-cols-4 text-[10px] text-center text-sub-600 mb-2 flex items-center">
             <span>체성분 밸런스</span>
             <span>표준 이하</span>
@@ -95,7 +95,7 @@ export default function MainAnalysis({
             <span>표준 이상</span>
 
           </div>
-          <div className="grid grid-cols-[1fr_3fr] gap-x-4 gap-y-3 px-4 mt-2">
+          <div className="grid grid-cols-[1fr_3fr] gap-x-4 gap-y-2 px-4 my-2">
             {[
               { label: "체수분", value: data.result_body_water_grade }, // 0, 1, 2 중 하나
               { label: "단백질", value: data.result_protein_grade }, 
@@ -106,16 +106,12 @@ export default function MainAnalysis({
 
               return (
                 <React.Fragment key={index}>
-                  {/* 라벨 */}
                   <div className="text-sm text-sub-800 font-medium self-center">
                     {item.label}
                   </div>
                   
-                  {/* 바 및 원 위치 */}
                   <div className="relative flex items-center col-start-2">
-                    {/* 전체 회색 바 */}
                     <div className="w-full h-1.5 bg-sub-100 rounded-full"></div>
-                    {/* 등급에 따른 원 위치 */}
                     <div 
                       className="absolute w-3.5 h-3.5 bg-accent rounded-full border-2 border-white"
                       style={{ 
@@ -131,7 +127,7 @@ export default function MainAnalysis({
         </div>
       </div>
 
-      <div className="grid grid-rows-[30%_70%]">
+      <div className="grid grid-rows-[40%_60%]">
         <div className="flex flex-col flex-1 bg-sub-100 border border-sub-200 rounded-sm py-1 px-4">
             <div className="flex items-center gap-2 ">
               <div className="w-4 h-4 rounded-sm bg-accent" />

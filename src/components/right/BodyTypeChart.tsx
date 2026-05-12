@@ -6,11 +6,13 @@ export default function BodyTypeChart() {
   };
 
   return (
-    <div className="flex flex-col px-4 gap-2 w-full ">
+    <div className="flex flex-col px-2 gap-2 w-full ">
       {/* 1. 타이틀 영역 */}
       <div className="flex gap-2 items-center mb-6 text-accent font-bold">
-        <div className="w-4 h-4 rounded-md bg-accent" />
-        <div className="text-lg">바디 타입 세부 분석</div>
+        <div className="w-4 h-4 rounded-sm bg-accent" />
+        <div className="text-accent font-bold ">
+          바디 타입 세부 분석
+        </div>
       </div>
 
       {/* 2. 그래프 영역 (여기에 flex-1 추가!) */}

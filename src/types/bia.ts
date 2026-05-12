@@ -1,6 +1,6 @@
 export interface IBiaData extends IBiaInfo, IBiaDetail {}
 
-export interface IBiaDetail extends IComposition, IMainAnalysis, IBodyPart, IRecommend, IBodyBenchmark, IBiaDataEtc {}
+export interface IBiaDetail extends IComposition, IMainAnalysis, IBodyPart, IRecommend, IBodyBenchmark {}
 
 export interface IBiaInfo {
   sn: number;
@@ -33,7 +33,7 @@ export interface IComposition {
   amount_of_inorganic_salt_std_min: number;
   amount_of_inorganic_salt_std_max: number;
 
-  
+  result_body_composition_description: string;
   result_body_fat_mass_grade: string;
   result_weight_grade:string;
 
@@ -140,17 +140,14 @@ export interface IBodyBenchmark {
   physical_age: number;
   body_type	: number;
   result_body_type_description: string;
-  result_body_composition_description: string;
   recommended_intake_kcal: number;
   ideal_weight: number;
   target_weight: number;
   weight_control: number;
   muscle_control: number;
   fat_control_amount: number;
-}
 
-export interface IBiaDataEtc  {
-
+  
   // 제지방
   lean_body_weight: number;
   lean_body_weight_std_min: number;
@@ -186,4 +183,5 @@ export interface IBiaDataEtc  {
   subcutaneous_fat_rate_std_min: number;
   subcutaneous_fat_rate_std_max: number;
   
+
 }

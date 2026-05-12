@@ -1,5 +1,5 @@
 import type { IComposition } from "@/types/bia";
-import HalfDonutChart, { type SegmentData } from "../ui/HalfDonutChart";
+import VerticalStackedBar, { type SegmentData } from "../ui/VerticalStackedBar";
 
 interface CompositionCardProps {
   title: string;
@@ -10,6 +10,9 @@ interface CompositionCardProps {
 }
 
 export function CompositionCard({ title, weight, value, low, high }: CompositionCardProps) {
+
+  
+
   const stateColor = {
     "체수분": "bg-accent ",
     "단백질": "bg-orangee ",
@@ -47,14 +50,14 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
   }
 
   return (
-    <div className="flex h-full items-center gap-2 w-full ">
+    <div className="flex h-full items-center gap-1 w-full ">
       {/* 타이틀 박스 */}
-      <div className={`p-2 text-center text-xs font-bold text-white rounded-lg ${stateColor}`}>
+      <div className={`flex items-center h-full p-2 w-16 text-xs font-bold text-white rounded-sm justify-center ${stateColor}`}>
         {title}
       </div>
 
       {/* 메인 데이터 영역 */}
-      <div className="flex flex-1 h-full items-center bg-sub-100 rounded-xl px-2 gap-2">
+      <div className="flex flex-1 h-full items-center bg-sub-100 rounded-sm px-2 gap-2">
         {/* 체중 대비 백분율 */}
         <div className="w-12 text-center text-[13px] font-bold text-sub-800">
           {percentage}%
@@ -89,7 +92,7 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
               transform: 'translateY(-50%)', // 세로 중앙 정렬
             }}
           >
-            <div className="bg-white/90 rounded-lg p-2 flex items-center justify-center gap-1 shadow-sm">
+            <div className="bg-white/80 rounded-sm px-1 flex items-center justify-center gap-1 ">
               <span className={`w-1.5 h-1.5 rounded-full ${stateColor}`} />
               <span className={`text-[12px] font-bold ${textColor}`}>{value}</span>
             </div>
@@ -97,7 +100,7 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
         </div>
       </div>
 
-      <div className={`flex h-full items-center bg-sub-100 rounded-xl px-2 ${changeTextColor}`}>
+      <div className={`flex h-full items-center bg-sub-100 rounded-sm text-xs px-2 ${changeTextColor}`}>
         {/* TODO 여기 이전 기록과 변화량 추가요망 */}
           -0.2
       </div>
@@ -107,7 +110,19 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
 
 
 export default function Composition({data}: {data: IComposition}) {
+  const splitMessage = (message: string) => {
+    const match = message.match(/\[(.*?)\]\s*(.*)/);
+    
+    if (match) {
+      return {
+        title: `[${match[1]}]`, // 좌측에 넣을 타이틀 (대괄호 포함)
+        description: match[2]   // 우측에 넣을 나머지 본문
+      };
+    }
 
+    return { title: "", description: message }; // 형식이 다를 경우 예외 처리
+  };
+  const { title, description } = splitMessage(data.result_body_composition_description);
   const mainComps = [
     {
       title: "체수분",
@@ -149,7 +164,7 @@ export default function Composition({data}: {data: IComposition}) {
     {
       label: "무기질",
       percentage: (data.amount_of_inorganic_salt / data.weight) * 100,
-      color: "#4C4C4C"
+      color: "#7A828A"
     },
     {
       label: "체지방",
@@ -159,7 +174,7 @@ export default function Composition({data}: {data: IComposition}) {
 
   ]
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col">
       
       <div className="flex items-center gap-2 ">
         <div className="w-4 h-4 rounded-sm bg-accent" />
@@ -191,14 +206,25 @@ export default function Composition({data}: {data: IComposition}) {
         </div>
 
         {/* 2. 하단 컨텐츠 영역 (차트와 카드 리스트가 같은 높이를 공유) */}
-        <div className="flex flex-1 gap-2 items-stretch">
+        <div className="flex flex-1 gap-1 items-stretch">
           {/* 도넛 차트 컨테이너 (정중앙 배치) */}
-          <div className="w-[100px] flex items-start">
-            <HalfDonutChart data={donutComps} radius={80} />
+          <div className="flex items-center mx-4">
+            <VerticalStackedBar data={donutComps} />
           </div>
 
           {/* 카드 리스트 컨테이너 (차트 높이에 맞춰 카드 간격이 자동 조절되도록 justify-between 사용 가능) */}
-          <div className="flex flex-col flex-1 gap-2">
+          <div className="flex flex-col flex-1 gap-1">
+            <div className="flex h-full items-center gap-1 w-full ">
+              {/* 타이틀 박스 */}
+              <div className={`flex items-center justify-center h-full px-2 py-0.5 w-16 text-[8px] font-bold text-white rounded-sm bg-sub-400`}>
+                평균 비율
+              </div>
+
+              {/* 메인 데이터 영역 */}
+              <div className="flex h-fit flex-1 text-[10px] text-sub-600 pl-6 items-center bg-sub-100 rounded-sm px-2 gap-1">
+                 체수분 : 55~65% / 단백질 : 15~18% / 무기질 : 5~6% / 체지방 :10~20%
+              </div>
+            </div>
             {mainComps.map((comp) => (
               <CompositionCard
                 key={comp.title}
@@ -216,9 +242,9 @@ export default function Composition({data}: {data: IComposition}) {
         
       </div>
 
-      <div className="flex flex-1 mt-4 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md text-blackk text-xs items-center">
-        <span className="font-bold text-blackk">[표준범위] </span>
-        <span className="ml-4 text-blackk"> 체수분: 55~65% / 단백질: 15~18% / 무기질: 5~6% / 체지방: 10~20%</span>
+      <div className="grid grid-cols-[20%_80%] mt-4 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md items-center leading-none">
+          <span className="font-bold text-sub-800 text-xs">{title}</span>
+          <span className="text-sub-800 text-[10px]">{description}</span>
       </div>
     </div>
   );

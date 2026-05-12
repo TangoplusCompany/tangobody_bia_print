@@ -118,7 +118,7 @@ const dummyBiaData: IBiaData = {
   result_habits_grade: 1,
 
   // IBodyBenchmark (건강 지표)
-  body_score: 78,
+  body_score: 96,
   physical_age: 29,
   body_type: 3, // 예: 표준형
   recommended_intake_kcal: 2400,
@@ -158,7 +158,7 @@ const dummyBiaData: IBiaData = {
   subcutaneous_fat_rate_std_min: 12.0,
   subcutaneous_fat_rate_std_max: 20.0,
   result_body_type_description: "표준 체형입니다.",
-  result_body_composition_description: "근육량과 체지방량이 모두 표준 범위 내에 있습니다.",
+  result_body_composition_description: "[고지방 비만] 체내 지방 비율이 표준을 초과하여 만성질환 위험이 높아진 상태입니다. 전신 성분 중 지방의 비율을 낮추는 것이 시급합니다.",
   result_cid_type: 2, // 'I'자형 (표준)
   result_cid_comment: "최고 위험, 체중과 지방은 과다하며 이를 지탱할 근육이 부족합니다. 당뇨, 고혈압 등 만성질환 위험이 극도로 높습니다.",
   result_visceral_fat_level_grade: 1
@@ -216,7 +216,7 @@ function App() {
 
           {/* 🍲🍲🍲🍲 right 🍲🍲🍲🍲 */}
           <div className='grid grid-rows-[50%_25%_25%] w-1/3 rounded-xl shadow'>
-            <BodyBenchMark />
+            <BodyBenchMark data={dummyBiaData} />
             
             {/* 3번째 컴포넌트 */}
             <div>

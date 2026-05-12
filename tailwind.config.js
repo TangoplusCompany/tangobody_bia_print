@@ -12,8 +12,7 @@ export default {
       },
       colors: {
         'accent' : '#5B93FF',
-        'blackk' : '#4C4C4C',
-        'half-blackk' : '#7A828A',
+        'blackk' : '#7A828A',
         'redd': '#FF766C',
         'orangee' : '#FFA546',
         'sub': {
