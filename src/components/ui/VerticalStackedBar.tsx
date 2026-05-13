@@ -13,7 +13,6 @@ interface VerticalStackedBarProps {
 export default function VerticalStackedBar({
   data,
   width = 30,
-  
   gap = 2,
 }: VerticalStackedBarProps) {
   return (
@@ -21,23 +20,29 @@ export default function VerticalStackedBar({
       className="flex flex-col h-full" 
       style={{ 
         width: `${width}px`, 
-        
-        gap: `${gap}px` // 조각 사이의 간격
+        gap: `${gap}px` 
       }}
     >
-      {data.map((segment, index) => (
-        <div
-          key={index}
-          style={{ 
-            // percentage를 flex-grow 값으로 사용하여 정확한 비율 배분
-            flex: segment.percentage, 
-            backgroundColor: segment.color.startsWith('#') ? segment.color : undefined 
-          }}
-          // 각 조각의 끝을 살짝 둥글게 처리 (선택 사항)
-          className={`rounded-xs ${!segment.color.startsWith('#') ? segment.color : ''}`}
-          title={`${segment.label}: ${segment.percentage.toFixed(1)}%`}
-        />
-      ))}
+      {data.map((segment, index) => {
+        const isFirst = index === 0;
+        const isLast = index === data.length - 1;
+
+        return (
+          <div
+            key={index}
+            style={{ 
+              flex: segment.percentage, 
+              backgroundColor: segment.color.startsWith('#') ? segment.color : undefined 
+            }}
+            className={`
+              ${isFirst ? 'rounded-t-sm' : ''} 
+              ${isLast ? 'rounded-b-sm' : ''}
+              ${!segment.color.startsWith('#') ? segment.color : ''}
+            `}
+            title={`${segment.label}: ${segment.percentage.toFixed(1)}%`}
+          />
+        );
+      })}
     </div>
   );
 }

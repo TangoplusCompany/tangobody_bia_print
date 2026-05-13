@@ -1,16 +1,25 @@
+import type { IRecommend } from "@/types/bia";
+import ic_nutrition from "@/assets/ic_nutrition.png"
+import ic_exercise from "@/assets/ic_exercise.png"
+import ic_habit from "@/assets/ic_habit.png"
 export function RecommendCard ({type, title, description} : {type: string, title: string, description: string}) {
+  const iconMap: Record<string, string> = {
+    "영양처방": ic_nutrition,
+    "운동처방": ic_exercise,
+    "생활습관": ic_habit,
+  };
   return (
-    <div className="flex w-full gap-1">
-      <div className="rounded-sm bg-sub-100 border border-sub-200">
-      // TODO description 레이아웃 수정
+    <div className="flex w-full gap-2">
+      <div className="w-14 h-14 aspect-square rounded-md bg-sub-100 border items-center flex justify-center border-sub-200">
+        <img src={iconMap[type] || ic_habit} alt={type} className="w-8 h-8" />
       </div>
-      <div className="flex flex-col">
-        <div>
-          {title}
-          {type}
+      <div className="flex flex-col gap-1 w-full">
+        <div className="flex w-full justify-between items-center">
+          <span className="text-xs font-bold text-blackk ">{title}</span>
+          <div className="px-1 rounded-sm bg-accent text-[10px] text-white">{type}</div>
         </div>
 
-        <div>
+        <div className="text-xs leading-tight text-sub-600">
           {description}
         </div>
       </div>
@@ -20,9 +29,26 @@ export function RecommendCard ({type, title, description} : {type: string, title
 }
 
 
-export default function Recommend() {
+export default function Recommend({data}: {data: IRecommend}) {
   
-  
+  const types = [
+    {
+        type: "영양처방",
+        title: data.result_nutrition_title,
+        description: data.result_nutrition_description
+    },
+    {
+        type: "운동처방",
+        title: data.result_exercise_title,
+        description: data.result_exercise_description
+    },
+    {
+        type: "생활습관",
+        title: data.result_habits_title,
+        description: data.result_habits_description
+    },
+
+  ]
   return (
     <div className="flex flex-col gap-2 p-2 w-full h-full">
       {/* 1. 타이틀 영역 (작성하신 부분) */}
@@ -33,8 +59,12 @@ export default function Recommend() {
         </div>
       </div>
 
-      <div className="grid grid-rows-3">
+      <div className="grid grid-rows-3 h-full">
+        {types.map( (type) => (
+          <RecommendCard type={type.type} title={type.title} description={type.description} />
+        )
 
+        )}
       </div>
       
       

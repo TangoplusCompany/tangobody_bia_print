@@ -220,11 +220,11 @@ function App() {
             
             {/* 3번째 컴포넌트 */}
             <div>
-              <Recommend />
+              <Recommend data={dummyBiaData} />
             </div>
             
             {/* 4번째 컴포넌트 */}
-            <div className='mt-auto mb-4'>
+            <div className=''>
               <BodyTypeChart />
             </div>
           </div>

@@ -242,9 +242,9 @@ export default function Composition({data}: {data: IComposition}) {
         
       </div>
 
-      <div className="grid grid-cols-[20%_80%] mt-4 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md items-center leading-none">
-          <span className="font-bold text-sub-800 text-xs">{title}</span>
-          <span className="text-sub-800 text-[10px]">{description}</span>
+      <div className="grid grid-cols-[20%_80%] mt-4 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md items-center ">
+          <span className="font-bold text-sub-800 text-xs text-center">{title}</span>
+          <span className="text-sub-800 text-[10px] leading-none">{description}</span>
       </div>
     </div>
   );
