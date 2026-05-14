@@ -6,11 +6,11 @@ export default function BodyTypeChart() {
   };
 
   return (
-    <div className="flex flex-col px-2 gap-2 w-full ">
+    <div className="flex flex-col px-2 w-full h-full">
       {/* 1. 타이틀 영역 */}
       <div className="flex gap-2 items-center mb-6 text-accent font-bold">
-        <div className="w-4 h-4 rounded-sm bg-accent" />
-        <div className="text-accent font-bold ">
+        <div className="w-3 h-3 rounded-sm bg-accent" />
+        <div className="text-accent font-bold text-sm">
           바디 타입 세부 분석
         </div>
       </div>
@@ -27,7 +27,7 @@ export default function BodyTypeChart() {
         </div>
 
         {/* --- 메인 그리드 표 (h-[160px]를 h-full로 변경!) --- */}
-        <div className="grid grid-cols-3 grid-rows-4 w-full h-[150px] border border-sub-200 rounded-md text-[11px] text-sub-800 bg-white relative">
+        <div className="grid grid-cols-3 grid-rows-4 w-full h-[180px] border border-sub-200 rounded-md text-[11px] text-sub-800 bg-white relative">
           
           {/* Row 1 */}
           <div className="border-b border-r border-sub-200 flex items-center justify-center">우람한</div>
@@ -58,7 +58,7 @@ export default function BodyTypeChart() {
         </div>
 
         {/* --- X축 라벨 (체지방률) --- */}
-        <div className="absolute -bottom-2 left-0 w-full text-[10px] text-sub-400">
+        <div className="absolute -bottom-1 left-0 w-full text-[10px] text-sub-400">
           <span className="absolute left-[33.33%] -translate-x-1/2">10.0</span>
           <span className="absolute left-[66.66%] -translate-x-1/2">20.0</span>
           <span className="absolute right-0">체지방률</span>

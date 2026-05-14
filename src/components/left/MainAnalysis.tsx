@@ -68,10 +68,10 @@ export default function MainAnalysis({
   // const statusLabel = labelMap[data. as keyof typeof labelMap];
   // const leftPos = posMap[grade as keyof typeof posMap];
   return (
-    <div className="grid grid-cols-2 w-full mt-4 gap-4">
+    <div className="grid grid-cols-2 w-full gap-4">
       
       <div className="grid grid-rows-[40%_60%] h-full justify-center">
-        <div className="grid grid-cols-[25%_75%] gap-2 items-center">
+        <div className="grid grid-cols-[25%_75%] gap-3 items-center">
           <div className="w-16 h-16 bg-sub-100 rounded-3xl border-2 border-sub-200 flex justify-center">
             <span 
               className="text-[52px] font-bebas font-bold text-sub-200 leading-none flex items-center mt-2" 
@@ -128,10 +128,10 @@ export default function MainAnalysis({
       </div>
 
       <div className="grid grid-rows-[40%_60%]">
-        <div className="flex flex-col flex-1 bg-sub-100 border border-sub-200 rounded-sm py-1 px-4">
+        <div className="flex flex-col flex-1 bg-sub-100 border border-sub-200 rounded-sm py-1 px-2">
             <div className="flex items-center gap-2 ">
-              <div className="w-4 h-4 rounded-sm bg-accent" />
-              <div className="text-accent font-bold ">
+              <div className="w-3 h-3 rounded-sm bg-accent" />
+              <div className="text-accent font-bold text-sm">
                 근감소수치
               </div>
             </div>
@@ -156,7 +156,7 @@ export default function MainAnalysis({
             </div>
         </div>
 
-        <div className="grid grid-cols-3 grid-rows-2 gap-1 py-1">
+        <div className="grid grid-cols-3 grid-rows-2 gap-2 pt-2">
           <AnalysisCard 
             label="골격근량" 
             value={data.skeletal_muscle_mass} 
