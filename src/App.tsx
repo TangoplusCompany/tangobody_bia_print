@@ -181,7 +181,7 @@ function App() {
       </div>
       
 
-      <div className="a4-page flex flex-col bg-white overflow-hidden bg-sub-400">
+      <div className="a4-page flex flex-col bg-white">
         <div className='flex justify-between h-16 w-full bg-sub-400 p-2 gap-4'>
           <div className='flex gap-4'>
             <img 
@@ -206,11 +206,11 @@ function App() {
         {/* 🥘🥘🥘🥘🥘🥘🍲🍲🍲🍲body🍲🍲🍲🍲🍝🍝🍝🍝🍝🍝 */}
         <div className='flex flex-1 w-full px-2 py-4 gap-2'>
           {/* 🥘🥘🥘🥘 left 🥘🥘🥘🥘 */}
-          <div className='grid grid-rows-[25%_25%_25%_25%] w-2/3 gap-2 mr-2'>
+          <div className='grid grid-rows-[25%_25%_25%_25%] w-2/3 mr-2'>
             <Composition data={dummyBiaData} />
             <MainAnalysis data={dummyBiaData} prevMuscleMassIndex={6.5}/>
             
-            <BodyModel />
+            <BodyModel data={dummyBiaData} />
             <TrendGraph />
           </div>
 

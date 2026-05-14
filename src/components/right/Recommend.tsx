@@ -50,11 +50,11 @@ export default function Recommend({data}: {data: IRecommend}) {
 
   ]
   return (
-    <div className="flex flex-col gap-2 p-2 w-full h-full">
+    <div className="flex flex-col gap-2 px-2 w-full h-full">
       {/* 1. 타이틀 영역 (작성하신 부분) */}
-      <div className="flex gap-2 items-center  text-accent font-bold">
-        <div className="w-4 h-4 rounded-sm bg-accent" />
-        <div className="text-accent font-bold ">
+      <div className="flex gap-2 items-center text-accent font-bold">
+        <div className="w-3 h-3 rounded-sm bg-accent" />
+        <div className="text-accent font-bold text-sm ">
           체중조절/처방
         </div>
       </div>

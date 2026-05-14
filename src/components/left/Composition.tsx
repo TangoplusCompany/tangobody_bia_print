@@ -52,7 +52,7 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
   return (
     <div className="flex h-full items-center gap-1 w-full ">
       {/* 타이틀 박스 */}
-      <div className={`flex items-center h-full p-2 w-16 text-xs font-bold text-white rounded-sm justify-center ${stateColor}`}>
+      <div className={`flex items-center h-full p-2 w-16 text-[10px] leading-tight font-bold text-white rounded-sm justify-center ${stateColor}`}>
         {title}
       </div>
 
@@ -177,8 +177,8 @@ export default function Composition({data}: {data: IComposition}) {
     <div className="flex flex-col">
       
       <div className="flex items-center gap-2 ">
-        <div className="w-4 h-4 rounded-sm bg-accent" />
-        <div className="text-accent font-bold ">
+        <div className="w-3 h-3 rounded-sm bg-accent" />
+        <div className="text-accent text-sm font-bold ">
           체성분 & 체수분 밸런스
         </div>
       </div>
@@ -216,12 +216,12 @@ export default function Composition({data}: {data: IComposition}) {
           <div className="flex flex-col flex-1 gap-1">
             <div className="flex h-full items-center gap-1 w-full ">
               {/* 타이틀 박스 */}
-              <div className={`flex items-center justify-center h-full px-2 py-0.5 w-16 text-[8px] font-bold text-white rounded-sm bg-sub-400`}>
+              <div className={`flex items-center justify-center h-full px-2 w-16 text-[8px] font-bold text-white rounded-sm bg-sub-400`}>
                 평균 비율
               </div>
 
               {/* 메인 데이터 영역 */}
-              <div className="flex h-fit flex-1 text-[10px] text-sub-600 pl-6 items-center bg-sub-100 rounded-sm px-2 gap-1">
+              <div className="flex h-fit flex-1 text-[8px] text-sub-600 pl-6 items-center bg-sub-100 rounded-sm px-2 gap-1">
                  체수분 : 55~65% / 단백질 : 15~18% / 무기질 : 5~6% / 체지방 :10~20%
               </div>
             </div>
@@ -242,7 +242,7 @@ export default function Composition({data}: {data: IComposition}) {
         
       </div>
 
-      <div className="grid grid-cols-[20%_80%] mt-4 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md items-center ">
+      <div className="grid grid-cols-[20%_80%] mt-2 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md items-center ">
           <span className="font-bold text-sub-800 text-xs text-center">{title}</span>
           <span className="text-sub-800 text-[10px] leading-none">{description}</span>
       </div>

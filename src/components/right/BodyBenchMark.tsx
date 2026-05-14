@@ -25,7 +25,7 @@ function MetricList({ title, titleValue, items }: MetricListProps) {
       <div className="relative h-[2px] rounded-full bg-sub-800 shrink-0 mr-2" />
 
       {/* 리스트 영역 */}
-      <div className="flex flex-col text-[10px] text-black">
+      <div className="flex flex-col text-[10px] text-black leading-[1.5]">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between items-center ">
             <span className="font-medium text-sub-600">{item.label}</span>
