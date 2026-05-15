@@ -15,7 +15,7 @@ interface MetricListProps {
 
 function MetricList({ title, titleValue, items }: MetricListProps) {
   return (
-    <div className="flex flex-col w-full gap-0.5">
+    <div className="flex flex-col w-full gap-1">
       {/* 상단 메인 타이틀 (빨간색 강조) */}
       <div className="text-redd text-sm font-bold">
         {title}: {titleValue}
@@ -25,7 +25,7 @@ function MetricList({ title, titleValue, items }: MetricListProps) {
       <div className="relative h-[2px] rounded-full bg-sub-800 shrink-0 mr-2" />
 
       {/* 리스트 영역 */}
-      <div className="flex flex-col text-[10px] text-black leading-[1.5]">
+      <div className="flex flex-col text-[10px] text-black leading-[1.75]">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between items-center ">
             <span className="font-medium text-sub-600">{item.label}</span>
@@ -59,6 +59,15 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
       { label: "표준 체중 대비 체중 비율", value: data.obesity_percentage, unit: "%" },
       { label: "피하지방", value: data.subcutaneous_fat_rate, unit: "%" },
     ];
+
+    const bodyType = {
+      0: "마른형",
+      1: "비만형",
+      2: "경도비만형",
+      3: "중도비만형",
+      4: "고도비만형",
+      5: "마른비만형"
+    }[data.body_type]
   return (
     <div className='flex flex-col'>
       <div className='flex w-fit bg-accent rounded-br-xl rounded-tl-xl text-base text-white font-semibold px-2 py-1'>
@@ -117,10 +126,10 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
           </img>
           <div className='flex flex-col gap-1'>
             <div className='text-xs font-bold text-black'>
-              비만형(체지방 과다)
+              {bodyType}
             </div>
             <div className='text-[10px] leading-[1.3] break-keep text-black'>
-              근육, 지방 많음 운동 능력은 좋지만 지방량 비율이 높아 건강상 리스크 존재
+              {data.result_body_type_description}
             </div>
           </div>
         </div>

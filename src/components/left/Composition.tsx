@@ -1,4 +1,4 @@
-import type { IComposition } from "@/types/bia";
+import type { IBiaData } from "@/types/bia";
 import VerticalStackedBar, { type SegmentData } from "../ui/VerticalStackedBar";
 
 interface CompositionCardProps {
@@ -7,47 +7,61 @@ interface CompositionCardProps {
   value: number;
   low: number;
   high: number;
+  prevValue?: number; // 직전 데이터 추가
 }
 
-export function CompositionCard({ title, weight, value, low, high }: CompositionCardProps) {
-
-  
-
+export function CompositionCard({ title, weight, value, low, high, prevValue }: CompositionCardProps) {
   const stateColor = {
     "체수분": "bg-accent ",
     "단백질": "bg-orangee ",
     "무기질": "bg-blackk ",
     "체지방": "bg-redd"
-  } [title];
+  }[title];
+  
   const textColor = {
     "체수분": "text-accent ",
     "단백질": "text-orangee ",
     "무기질": "text-blackk ",
     "체지방": "text-redd"
-  } [title];
-  const changeTextColor = {
-    0: "text-accent ",
-    1: "text-redd"
-  } [value];
+  }[title];
+
   const percentage = ((value / weight) * 100).toFixed(1);
 
+  /**
+   * 인바디 스타일 계산 로직
+   * 1구간(이하): 0 ~ 33.3%
+   * 2구간(표준): 33.3% ~ 66.6% (범위: high - low)
+   * 3구간(이상): 66.6% ~ 100% (표준 범위의 너비만큼을 33.3%로 계산)
+   */
+  const calculatePosition = (val: number) => {
+    if (val <= 0) return 0;
+    
+    // 1. 표준 이하 구간
+    if (val < low) {
+      return (val / low) * 33.3;
+    }
+    
+    const range = high - low; // 표준 범위 너비
+    
+    // 2. 표준 구간
+    if (val <= high) {
+      return 33.3 + ((val - low) / range) * 33.3;
+    }
+    
+    // 3. 표준 이상 구간 (초과분을 표준 범위 너비 대비 비율로 계산)
+    const excess = val - high;
+    const pos = 66.6 + (excess / range) * 33.3;
+    
+    return Math.min(pos, 100); // 최대 100%로 제한
+  };
 
-  // eslint-disable-next-line no-useless-assignment
-  let barPosition = 0;
-
-  if (value < low) {
-
-    barPosition = (value / low) * 33.3;
-  } else if (value <= high) {
-
-    const range = high - low;
-    const offset = value - low;
-    barPosition = 33.3 + (offset / range) * 33.3;
-  } else {
-    const range = high - low;
-    const offset = value - high;
-    barPosition = 66.6 + Math.min((offset / range) * 33.3, 33.3);
-  }
+  const currentPos = calculatePosition(value);
+  // 이전 데이터가 없으면 바를 보여주지 않도록 0으로 설정
+  const prevPos = prevValue !== undefined ? calculatePosition(prevValue) : 0;
+  
+  // 증감 계산
+  const diff = prevValue !== undefined ? (value - prevValue).toFixed(1) : undefined;
+  const diffColor = Number(diff) > 0 ? "text-redd" : "text-accent";
 
   return (
     <div className="flex h-full items-center gap-1 w-full ">
@@ -58,41 +72,39 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
 
       {/* 메인 데이터 영역 */}
       <div className="flex flex-1 h-full items-center bg-sub-100 rounded-sm px-2 gap-2">
-        {/* 체중 대비 백분율 */}
         <div className="w-12 text-center text-[13px] font-bold text-sub-800">
           {percentage}%
         </div>
 
-        {/* 3단계 눈금형 프로그레스 바 */}
         <div className="relative flex-1 h-full flex items-center">
           {/* 배경 (3등분) */}
           <div className="absolute inset-0 flex">
-            <div className="flex-1 bg-sub-100 rounded-l-md" title="표준 이하" />
-            <div className="flex-1 bg-sub-200" title="표준" />
-            <div className="flex-1 bg-sub-100 rounded-r-md" title="표준 이상" />
+            <div className="flex-1 bg-sub-100 rounded-l-md border-r border-white/50" />
+            <div className="flex-1 bg-sub-200 border-r border-white/50" />
+            <div className="flex-1 bg-sub-100 rounded-r-md" />
           </div>
           
-          {/* 실제 수치 막대 */}
-          <div className="flex flex-col flex-1 gap-1.5">
+          {/* 막대 영역 */}
+          <div className="flex flex-col flex-1 gap-1.5 z-10">
+            {/* 현재 값 막대 */}
             <div 
-              className={`relative h-2 rounded-sm transition-all duration-700 ease-out ${stateColor}`}
-              style={{ width: `${barPosition}%` }}
+              className={`relative h-2 rounded-r-sm transition-all duration-700 ease-out ${stateColor}`}
+              style={{ width: `${currentPos}%` }}
             />
-            <div 
-              className={`relative h-2 rounded-r-full transition-all duration-700 ease-out bg-sub-300`}
-              style={{ width: `${barPosition}%` }}
-            />
+            {prevValue !== undefined && (
+              <div 
+                className={`relative h-1.5 rounded-r-full transition-all duration-700 ease-out bg-sub-400/60`}
+                style={{ width: `${prevPos}%` }}
+              />
+            )}
           </div>
 
-          {/* 실제 측정 값 (박스를 여기 안으로 옮겼습니다) */}
+          {/* 측정 값 라벨 */}
           <div 
-            className="absolute right-0 z-10 w-fit" // 가장 오른쪽에 고정, 고정 너비(w-12)
-            style={{ 
-              top: '50%',
-              transform: 'translateY(-50%)', // 세로 중앙 정렬
-            }}
+            className="absolute right-0 z-20 w-fit"
+            style={{ top: '50%', transform: 'translateY(-50%)' }}
           >
-            <div className="bg-white/80 rounded-sm px-1 flex items-center justify-center gap-1 ">
+            <div className="bg-white/75 shadow-sm rounded-sm px-1.5 flex items-center justify-center gap-1 border border-sub-200">
               <span className={`w-1.5 h-1.5 rounded-full ${stateColor}`} />
               <span className={`text-[12px] font-bold ${textColor}`}>{value}</span>
             </div>
@@ -100,16 +112,19 @@ export function CompositionCard({ title, weight, value, low, high }: Composition
         </div>
       </div>
 
-      <div className={`flex h-full items-center bg-sub-100 rounded-sm text-xs px-2 ${changeTextColor}`}>
-        {/* TODO 여기 이전 기록과 변화량 추가요망 */}
-          -0.2
+      {/* 증감 표시 영역 */}
+      <div className={`flex h-full w-12 justify-center items-center bg-sub-100 rounded-sm text-[8px] font-medium ${diff !== undefined ? diffColor : 'text-transparent'}`}>
+        {diff !== undefined && (
+          <>({Number(diff) >= 0 ? '▲' : '▼'} {Math.abs(Number(diff))})</>
+        )}
+        
       </div>
     </div>
   );
 }
 
 
-export default function Composition({data}: {data: IComposition}) {
+export default function Composition({data}: {data: IBiaData}) {
   const splitMessage = (message: string) => {
     const match = message.match(/\[(.*?)\]\s*(.*)/);
     
@@ -129,27 +144,32 @@ export default function Composition({data}: {data: IComposition}) {
       value: data.moisture_content,
       low: data.moisture_content_std_min,
       high: data.moisture_content_std_max,
+      prevValue: data.most_previous_data.moisture_content
     },
     {
       title: "단백질",
       value: data.protein_mass,
       low: data.protein_mass_std_min,
       high: data.protein_mass_std_max,
+      prevValue: data.most_previous_data.protein_mass
+      
     },
     {
       title: "무기질",
       value: data.amount_of_inorganic_salt,
       low: data.amount_of_inorganic_salt_std_min,
       high: data.amount_of_inorganic_salt_std_max,
+      prevValue: data.most_previous_data.amount_of_inorganic_salt
     },
     {
       title: "체지방",
       value: data.body_fat_mass,
       low: data.body_fat_mass_std_min,
       high: data.body_fat_mass_std_max,
+      prevValue: data.most_previous_data.body_fat_mass
     },
   ];
-
+  console.log(mainComps)
   const donutComps : SegmentData[] = [
     {
       label: "체수분",
@@ -190,7 +210,7 @@ export default function Composition({data}: {data: IComposition}) {
           <div className="w-[160px]" /> 
 
           {/* 카드의 타이틀 + % 수치 너비만큼 비워주기 */}
-          <div className="w-16" /> 
+          <div className="w-8" /> 
 
           {/* 표준 영역: 하단 프로그레스 바와 수직으로 일치하게 됨 */}
           <div className="flex-1 grid grid-cols-3 text-center">
@@ -233,13 +253,11 @@ export default function Composition({data}: {data: IComposition}) {
                 value={comp.value}
                 low={comp.low}
                 high={comp.high}
+                prevValue={comp.prevValue}
               />
             ))}
           </div>
-
-          
         </div>
-        
       </div>
 
       <div className="grid grid-cols-[20%_80%] mt-2 px-4 py-2 bg-sub-100 border border-sub-200 rounded-md items-center ">

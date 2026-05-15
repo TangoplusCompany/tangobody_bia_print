@@ -118,22 +118,43 @@ code {
   background: var(--code-bg);
 }
 
+
 .a4-page {
   width: 210mm;
-  min-height: 292mm;
+  height: 297mm; /* A4 정규 규격 */
   margin: 0 auto;
+  background-color: white;
 }
 
-/* 프린트 시 여백 제거 */
 @media print {
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 각 카드 컨테이너가 쪼개지는 것 방지 */
+  .unit-wrapper {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  @page {
+    /* 이 설정이 크로니움이 PDF로 바꿀 때 '여백' 옵션을 강제로 지정합니다 */
+    size: A4;
+    margin: 0 !important; /* 브라우저의 '여백' 설정을 무력화 */
+  }
+
   body {
     margin: 0;
     padding: 0;
   }
 
   .a4-page {
+    /* 인쇄 시에는 고정 너비 대신 마진 안쪽을 꽉 채우도록 변경하여 레이아웃 유지 */
+    width: 100%; 
     margin: 0;
     box-shadow: none;
+    padding: 5mm !important;
   }
 }
 

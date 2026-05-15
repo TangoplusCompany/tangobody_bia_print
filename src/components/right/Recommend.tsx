@@ -16,10 +16,10 @@ export function RecommendCard ({type, title, description} : {type: string, title
       <div className="flex flex-col gap-1 w-full">
         <div className="flex w-full justify-between items-center">
           <span className="text-xs font-bold text-blackk ">{title}</span>
-          <div className="px-1 rounded-sm bg-accent text-[10px] text-white">{type}</div>
+          <div className="px-1 rounded-sm bg-accent text-[9px] text-white">{type}</div>
         </div>
 
-        <div className="text-xs leading-tight text-sub-600">
+        <div className="text-[10px] leading-tight text-sub-600">
           {description}
         </div>
       </div>
