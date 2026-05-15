@@ -1,10 +1,18 @@
-export default function BodyTypeChart() {
-  // 사용자의 실제 데이터에 따라 이 비율을 계산해서 넣어주면 점이 움직입니다.
-  const myDotPosition = {
-    x: '58%', // 왼쪽에서부터 58% 위치 (체지방률)
-    y: '60%', // 위에서부터 60% 위치 (BMI)
-  };
+import type { IBiaData } from "@/types/bia";
 
+export default function BodyTypeChart({data}: {data: IBiaData}) {
+
+  const maxBodyFatMass = 30; // 체지방률 최대치
+const maxBMI = 33.5;       // BMI 최대치
+
+
+const bodyFatMassPos = Math.min((data.body_fat_mass / maxBodyFatMass) * 100, 100);
+const bmiPos = Math.min((data.bmi / maxBMI) * 100, 100);
+
+const myDotPosition = {
+  left: `${bodyFatMassPos}%`,
+  bottom: `${100 - bmiPos}%`, 
+};
   return (
     <div className="flex flex-col px-2 w-full h-full">
       {/* 1. 타이틀 영역 */}
@@ -53,7 +61,7 @@ export default function BodyTypeChart() {
           {/* --- 내 위치 마커 --- */}
           <div
             className="absolute w-3.5 h-3.5 bg-accent rounded-full transform -translate-x-1/2 -translate-y-1/2"
-            style={{ left: myDotPosition.x, top: myDotPosition.y }}
+            style={{ left: myDotPosition.left, top: myDotPosition.bottom }}
           />
         </div>
 

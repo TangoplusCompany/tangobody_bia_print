@@ -1,17 +1,42 @@
-export interface IBiaData extends IBiaInfo, IBiaDetail {}
+export interface IBiaData extends IBiaInfo, IComposition, IMainAnalysis, IBodyPart, IRecommend, IBodyBenchmark, IBiaPreviousData, IHistoryDatas {}
 
-export interface IBiaDetail extends IComposition, IMainAnalysis, IBodyPart, IRecommend, IBodyBenchmark {}
+
+export interface IPrevious {
+  measure_date: string;
+  measure_server_sn: number;
+  weight: number;
+  weight_std_min: number;
+  weight_std_max: number;
+
+  moisture_content: number;
+  moisture_content_std_min: number;
+  moisture_content_std_max: number;
+  body_fat_mass: number;
+  body_fat_mass_std_min: number;
+  body_fat_mass_std_max: number;
+  protein_mass: number;
+  protein_mass_std_min: number;
+  protein_mass_std_max: number;
+  amount_of_inorganic_salt: number;
+  amount_of_inorganic_salt_std_min: number;
+  amount_of_inorganic_salt_std_max: number;
+  skeletal_muscle_mass_index: number;
+}
+
+export interface IBiaPreviousData {
+  most_previous_data: IPrevious
+}
 
 export interface IBiaInfo {
-  sn: number;
-  server_sn: number;
-  name: string;
-  gender: number;
+  user_sn: number;
+  user_name: string;
   bia_version: number;
   ws_stable_weight_kg: number;
   br_input_height: number;
   br_input_age: number;
+  br_input_gender: number;
   measure_date: string;
+  history_data_count: number;
 }
 
 export interface IComposition {
@@ -38,6 +63,21 @@ export interface IComposition {
   result_weight_grade:string;
 
 }
+
+export interface IHistoryDatas {
+  history_data: IHistoryData[]
+}
+
+// 하단 잔디 그래프를 위해 재선언 
+export interface IHistoryData {
+  body_score: number;
+  skeletal_muscle_mass_index: number;
+  weight: number;
+  skeletal_muscle_mass: number;
+  lean_body_weight: number;
+  measure_date: string;
+}
+
 
 export interface IMainAnalysis {
   result_cid_type: number;
@@ -84,11 +124,13 @@ export interface IBodyPart {
   trunk_fat_mass: number;
   right_foot_fat_mass: number;
   left_foot_fat_mass: number;
+  
   right_hand_fat_percentage: number;
   left_hand_fat_percentage: number;
   trunk_fat_percentage: number;
   right_foot_fat_percentage: number;
   left_foot_fat_percentage: number;
+
   right_hand_muscle_mass: number;
   left_hand_muscle_mass: number;
   trunk_muscle_mass: number;

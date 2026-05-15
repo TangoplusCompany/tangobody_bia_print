@@ -1,3 +1,4 @@
+import type { IBiaData } from "@/types/bia";
 
 // 1. 더미 데이터 정의
 const DATES = ["4월 06일", "5월 17일", "5월 31일", "6월 12일", "7월 12일", "7월 16일", "10월 00일"];
@@ -68,7 +69,7 @@ const DataCell = ({ value, diff, status, up }: { value: string, diff: string, st
     'border-sub-200 text-sub-600 bg-white';
 
   return (
-    <div className={`flex flex-col items-center justify-center border rounded-sm py-2 px-1 w-full min-w-[40px] h-[30px] leading-none ${colorClass}`}>
+    <div className={`flex flex-col items-center justify-center border rounded-sm py-2 px-1 w-full min-w-[40px] h-[37px] leading-none ${colorClass}`}>
       <span className="text-[10px] font-bold leading-tight">{value}(%)</span>
       <div className="flex items-center gap-0.5 text-[8px] mt-1">
         <span>{up ? '▲' : '▼'}</span>
@@ -78,7 +79,8 @@ const DataCell = ({ value, diff, status, up }: { value: string, diff: string, st
   );
 };
 
-export default function TrendGraph() {
+export default function TrendGraph({data}: {data:IBiaData}) {
+  console.log(data)
   return (
     <div className="flex flex-col w-full bg-white">
       {/* 상단 헤더 영역 */}
@@ -111,7 +113,7 @@ export default function TrendGraph() {
             {CATEGORIES.map((cat) => (
               <div key={cat.id} className="grid grid-cols-[80px_repeat(7,1fr)] gap-0.5 items-center">
                 {/* 왼쪽 카테고리 라벨 */}
-                <div className="flex flex-col items-center justify-center bg-gray-100 rounded-sm h-[30px] text-center leading-tight">
+                <div className="flex flex-col items-center justify-center bg-gray-100 rounded-sm h-[37px] text-center leading-tight">
                   <span className="text-[10px] font-bold text-gray-700 leading-tight">{cat.label}</span>
                   <span className="text-[8px] text-gray-500 font-medium">{cat.unit}</span>
                 </div>

@@ -1,64 +1,61 @@
-import type { IBodyPart } from "@/types/bia";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import img_body from "@/assets/img_body.png"
+import type { IBiaData } from "@/types/bia";
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer } from "recharts";
 
-const data = [
-  { subject: "복부", value: 100, lastValue: 80, fullMark: 150, weight: "2.8kg", percent: "11.32%", status: "표준이상" },
-  { subject: "왼팔", value: 88, lastValue: 100, fullMark: 150, weight: "2.8kg", percent: "11.32%", status: "표준적합" },
-  { subject: "왼다리", value: 76, lastValue: 90, fullMark: 150, weight: "2.8kg", percent: "11.32%", status: "표준이상" },
-  { subject: "오른다리", value: 99, lastValue: 50, fullMark: 150, weight: "2.8kg", percent: "11.32%", status: "표준이상" },
-  { subject: "오른팔", value: 85, lastValue: 90, fullMark: 150, weight: "2.8kg", percent: "11.32%", status: "표준적합" },
-];
 
-const CustomAngleAxis = ({ payload, x, y }: any) => {
-  const item = data.find((d) => d.subject === payload.value);
-  if (!item) return null;
 
-  return (
-    /* g 태그의 위치를 꼭짓점(x, y)으로 고정하고 내부 요소들을 중앙 정렬합니다. */
-    <g transform={`translate(${x},${y})`} style={{ overflow: 'visible' }}>
-      
-      {/* 1. Subject (제목): 중앙 정렬, 살짝 위로 배정 */}
-      <text
-        textAnchor="middle"
-        fill="#333"
-        fontSize="9"
-        fontWeight="bold"
-        dy="-12" 
-      >
-        {item.subject}
-      </text>
+export function PentagonChart({ data }: { data: any[] }) {
 
-      <text
-        textAnchor="middle"
-        fill="#666"
-        dy="1" 
-      >
-        <tspan fontSize="8">{item.weight}</tspan>
-        <tspan fontSize="6.5" fill="#999" >{` (${item.percent})`}</tspan>
-      </text>
 
-      {/* 3. Status Badge (상태): 중앙 정렬을 위해 x값을 너비의 절반만큼 왼쪽으로 이동 */}
-      <foreignObject
-        x="-20" // width(40)의 절반만큼 왼쪽으로 이동하여 중앙 맞춤
-        y="6"   // 상세 정보 아래에 위치
-        width="40"
-        height="14"
-        style={{ overflow: 'visible' }}
-      >
-        <div className={`
-          text-[7px] text-white text-center rounded-[2px] 
-          py-[1px] leading-none flex items-center justify-center min-w-[40px]
-          ${item.status === '표준이상' ? 'bg-accent' : 'bg-sub-400'}
-        `}>
-          {item.status}
-        </div>
-      </foreignObject>
-    </g>
-  );
-};
+  const CustomAngleAxis = ({ payload, x, y }: any) => {
+    const item = data.find((d) => d.subject === payload.value);
+    if (!item) return null;
 
-export function PentagonChart() {
+    return (
+      /* g 태그의 위치를 꼭짓점(x, y)으로 고정하고 내부 요소들을 중앙 정렬합니다. */
+      <g transform={`translate(${x},${y})`} style={{ overflow: 'visible' }}>
+        
+        {/* 1. Subject (제목): 중앙 정렬, 살짝 위로 배정 */}
+        <text
+          textAnchor="middle"
+          fill="#333"
+          fontSize="9"
+          fontWeight="bold"
+          dy="-12" 
+        >
+          {item.subject}
+        </text>
+
+        <text
+          textAnchor="middle"
+          fill="#666"
+          dy="1" 
+        >
+          <tspan fontSize="9">{item.weight}</tspan>
+          <tspan fontSize="7" fill="#999" >{` (${item.percent})`}</tspan>
+        </text>
+
+        {/* 3. Status Badge (상태): 중앙 정렬을 위해 x값을 너비의 절반만큼 왼쪽으로 이동 */}
+        <foreignObject
+          x="-20" // width(40)의 절반만큼 왼쪽으로 이동하여 중앙 맞춤
+          y="6"   // 상세 정보 아래에 위치
+          width="40"
+          height="14"
+          style={{ overflow: 'visible' }}
+        >
+          <div className={`
+            text-[7px] text-white text-center rounded-[2px] 
+            py-[2px] leading-none flex items-center justify-center min-w-[40px]
+            ${item.status === '표준이상' ? 'bg-accent' : 'bg-sub-400'}
+          `}>
+            {item.status}
+          </div>
+        </foreignObject>
+      </g>
+    );
+  };
+
   return (
     <div className='relative flex-1 w-full min-h-0 flex justify-center items-center'>
 
@@ -98,7 +95,34 @@ export function PentagonChart() {
   );
 };
 
-export default function BodyModel({}: {data: IBodyPart}) {
+export default function BodyModel({data} : {data: IBiaData}) {
+
+  const getStatusLabel = (status: number): string => {
+    const statusMap: Record<number, string> = {
+      0: "표준이하",
+      1: "표준",
+      2: "표준이상"
+    };
+
+    return statusMap[status] ?? "데이터 없음";
+  };
+  console.log(data)
+  const muscleData = [
+    { subject: "복부", value: 100, lastValue: 80, fullMark: 150, weight: data.trunk_muscle_mass, percent: data.trunk_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_trunk) },
+    { subject: "왼팔", value: 88, lastValue: 100, fullMark: 150, weight: data.left_hand_muscle_mass, percent: data.left_hand_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_left_hand) },
+    { subject: "왼다리", value: 76, lastValue: 90, fullMark: 150, weight: data.left_foot_muscle_mass, percent: data.left_foot_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_left_foot) },
+    { subject: "오른다리", value: 99, lastValue: 50, fullMark: 150, weight: data.right_foot_muscle_mass, percent: data.right_foot_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_right_foot) },
+    { subject: "오른팔", value: 85, lastValue: 90, fullMark: 150, weight: data.right_hand_muscle_mass, percent: data.right_hand_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_right_hand) },
+  ];
+  const fatData = [
+    { subject: "복부", value: 100, lastValue: 80, fullMark: 150, weight: data.trunk_fat_mass, percent: data.trunk_fat_percentage + "%", status: getStatusLabel(data.fat_std_trunk) },
+    { subject: "왼팔", value: 88, lastValue: 100, fullMark: 150, weight: data.left_hand_fat_mass, percent: data.left_hand_fat_percentage + "%", status: getStatusLabel(data.fat_std_left_hand) },
+    { subject: "왼다리", value: 76, lastValue: 90, fullMark: 150, weight: data.left_foot_fat_mass, percent: data.left_foot_fat_percentage + "%", status: getStatusLabel(data.fat_std_left_foot) },
+    { subject: "오른다리", value: 99, lastValue: 50, fullMark: 150, weight: data.right_foot_fat_mass, percent: data.right_foot_fat_percentage + "%", status: getStatusLabel(data.fat_std_right_foot) },
+    { subject: "오른팔", value: 85, lastValue: 90, fullMark: 150, weight: data.right_hand_fat_mass, percent: data.right_hand_fat_percentage + "%", status: getStatusLabel(data.fat_std_right_hand) },
+
+  ];
+
 
   return (
     <div className='grid grid-cols-2 gap-1 w-full h-full'>
@@ -110,7 +134,7 @@ export default function BodyModel({}: {data: IBodyPart}) {
           </div>
         </div>
         
-        <PentagonChart />
+        <PentagonChart data={muscleData} />
 
 
       </div>
@@ -124,7 +148,7 @@ export default function BodyModel({}: {data: IBodyPart}) {
         </div>
 
 
-        <PentagonChart />
+        <PentagonChart data={fatData} />
       </div>
 
     </div>
