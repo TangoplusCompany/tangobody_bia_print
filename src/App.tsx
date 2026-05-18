@@ -44,6 +44,7 @@ function App() {
       </div>
     );
   }
+  console.log(data)
   return (
     <div className="w-[210mm] mx-auto h-full p-0 m-0">
       <div className="flex justify-end w-full p-0 m-0">
@@ -67,7 +68,7 @@ function App() {
               
               <div className='flex gap-8'>
                 <span>이름: {data.user_name}</span>
-                <span>성별: {data.br_input_gender === 0 ? "남성" : "여성"}</span>
+                <span>성별: {data.br_input_gender === 0 ? "여성" : "남성"}</span>
                 <span>신장: {data.br_input_height}cm</span>
                 <span>나이: 만 {data.br_input_age}세</span>
               </div>
