@@ -47,14 +47,15 @@ export function AnalysisHorizonCard({ title, value, low, high }: AnalysisHorizon
   //   2: "bg-redd"
   // }[statePos];
   const COLORS = {
-    sub300: "#C1C1C1", // 시작색 (bg-sub-300)
+    sub300: "#E0E0E0", // 표준 구간 배경색
+    orangee: "#FFA546", // 시작색 (bg-sub-300)
     accent: "#5B93FF", // 0일 때 끝색
     redd: "#FF766C",   // 2일 때 끝색
   };
   const endColor = {
     0: COLORS.redd,
-    1: COLORS.sub300,
-    2: COLORS.accent
+    1: COLORS.accent,
+    2: COLORS.orangee
   }[statePos];
 
   return (
@@ -83,7 +84,7 @@ export function AnalysisHorizonCard({ title, value, low, high }: AnalysisHorizon
           <div className="flex flex-col flex-1 gap-1.5 z-10">
             {/* 현재 값 막대 */}
             <div 
-              className={`relative h-2 rounded-r-sm transition-all duration-700 ease-out}`}
+              className={`relative h-3 rounded-r-sm transition-all duration-700 ease-out}`}
               style={{ width: `${currentPos}%`, backgroundImage: `linear-gradient(to right, ${COLORS.sub300}, ${endColor})` }}
             />
           
@@ -121,8 +122,8 @@ const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
       
       {/* 수치 */}
       <div className="flex items-baseline gap-0.5 leading-[1]">
-        <span className="text-[9px] font-bold text-sub-800">{value.toFixed(1)}</span>
-        <span className="text-[7px] text-sub-400 font-medium">{unit}</span>
+        <span className="text-[10px] font-bold text-sub-800">{value.toFixed(1)}</span>
+        <span className="text-[8px] text-sub-400 font-medium">{unit}</span>
       </div>
 
       {/* 게이지 바 */}
@@ -134,7 +135,7 @@ const AnalysisCard = ({ label, value, unit, grade }: IAnalysisCardProps) => {
       </div> */}
 
       {/* 하단 등급 표시 */}
-      <div className={`mt-0.5 px-1 ${labelBgMap[grade as keyof typeof labelMap]} rounded-sm text-white text-[8px] font-bold text-center`}>
+      <div className={`mt-0.5 px-1 ${labelBgMap[grade as keyof typeof labelMap]} rounded-sm text-white text-[10px] font-bold text-center`}>
         {statusLabel}
       </div>
     </div>
@@ -179,7 +180,7 @@ const muscleMassIndex = (() => {
   }
 })();
   return (
-    <div className="grid grid-cols-2 w-full gap-4">
+    <div className="grid grid-cols-2 w-full gap-2">
       
       <div className="grid grid-rows-[40%_60%] h-full justify-center">
         <div className="grid grid-cols-[25%_75%] gap-3 items-center">

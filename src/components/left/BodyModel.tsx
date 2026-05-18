@@ -77,7 +77,7 @@ export function PentagonChart({ data, isMuscle }: { data: any[]; isMuscle: boole
               dataKey="lastValue"
               stroke="#7E7E7E" 
               fill="#C1C1C1"
-              fillOpacity={0.4}
+              fillOpacity={0.25}
               strokeDasharray="4 4"
             />
             <Radar
@@ -85,7 +85,7 @@ export function PentagonChart({ data, isMuscle }: { data: any[]; isMuscle: boole
               dataKey="value"
               stroke="#5B93FF" 
               fill="#5B93FF"
-              fillOpacity={0.4}
+              fillOpacity={0.25}
             />
             <PolarAngleAxis
               dataKey="subject"

@@ -76,7 +76,7 @@ function App() {
               <div className='flex gap-4 justify-center '>
                 <span>현재 검사일: {data.measure_date?.replace(/-/g, ".").slice(0, 11)} </span>
                 <span>
-                  이전 검사일: {data.most_previous_data?.measure_date ? `${data.most_previous_data.measure_date.replace(/-/g, ".")}` : '미실시'}
+                  이전 검사일: {data.most_previous_data?.measure_date ? `${data.most_previous_data.measure_date.replace(/-/g, ".").slice(0, 11)}` : '미실시'}
                 </span>
               </div>
               
@@ -87,7 +87,7 @@ function App() {
         {/* 🥘🥘🥘🥘🥘🥘🍲🍲🍲🍲body🍲🍲🍲🍲🍝🍝🍝🍝🍝🍝 */}
         <div className='flex flex-1 w-full px-2 py-4 gap-2'>
           {/* 🥘🥘🥘🥘 left 🥘🥘🥘🥘 */}
-          <div className='grid grid-rows-[25%_25%_25%_25%] w-2/3 mr-2'>
+          <div className='grid grid-rows-[27.5%_27.5%_25%_20%] w-2/3 mr-2'>
             <Composition data={data} />
             <MainAnalysis data={data} prevMuscleMassIndex={data?.most_previous_data.skeletal_muscle_mass_index}/>
             <BodyModel data={data}  />
@@ -95,7 +95,7 @@ function App() {
           </div>
 
           {/* 🍲🍲🍲🍲 right 🍲🍲🍲🍲 */}
-          <div className='grid grid-rows-[50%_25%_25%] w-1/3 rounded-xl shadow'>
+          <div className='grid grid-rows-[55%_25%_20%] w-1/3 h-full rounded-xl shadow'>
             <BodyBenchMark data={data} />
             <Recommend data={data} />
             <BodyTypeChart data={data} />

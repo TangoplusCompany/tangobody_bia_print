@@ -2,11 +2,11 @@ import type { IBiaData } from "@/types/bia";
 
 
 const CATEGORIES = [
-  { id: 'score', label: '통합점수', unit: '(점)' },
-  { id: 'sarcopenia', label: '근감소증 수치', unit: '(%)' },
-  { id: 'weight', label: '몸무게', unit: '(kg)' },
-  { id: 'skeletal', label: '골격근량', unit: '(kg)' },
-  { id: 'fat', label: '지방량', unit: '(kg)' },
+  { id: 'score', label: '통합점수', unit: '점' },
+  { id: 'sarcopenia', label: '근감소증 수치', unit: '%' },
+  { id: 'weight', label: '몸무게', unit: 'kg' },
+  { id: 'skeletal', label: '골격근량', unit: 'kg' },
+  { id: 'fat', label: '지방량', unit: 'kg' },
 ];
 
 const transformToTrend = (
@@ -50,16 +50,16 @@ const transformToTrend = (
 };
 
 // 2. 개별 데이터 셀 컴포넌트
-const DataCell = ({ value, diff, status, up }: { value: string, diff: string, status: string, up: boolean }) => {
+const DataCell = ({ value, diff, status, unit, up }: { value: string, diff: string, status: string, unit: string, up: boolean }) => {
   const colorClass = 
-    status === 'red' ? 'border-redd text-redd' :
-    status === 'blue' ? 'border-accent text-accent' :
-    'border-sub-200 text-sub-600 bg-white';
+    status === 'red' ? ' text-redd' : 
+    status === 'blue' ? ' text-accent' :
+    ' text-sub-600 bg-white';
 
   return (
-    <div className={`flex flex-col items-center justify-center border rounded-sm py-2 px-1 w-full min-w-[40px] h-[37px] leading-none ${colorClass}`}>
-      <span className="text-[10px] font-bold leading-tight">{value}(%)</span>
-      <div className="flex items-center gap-0.5 text-[8px] mt-1">
+    <div className={`flex flex-col items-center justify-center rounded-sm py-1 px-1 w-full min-w-[40px] h-[28px] leading-none ${colorClass}`}>
+      <span className="text-[9px] font-bold leading-tight">{value}{unit}</span>
+      <div className="flex items-center gap-0.5 text-[7px] mt-1">
         <span>{up ? '▲' : '▼'}</span>
         <span>{diff}</span>
       </div>
@@ -79,7 +79,7 @@ export default function TrendGraph({data}: {data:IBiaData}) {
   };
   return (
     <div className="flex flex-col w-full bg-white">
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-center ">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-accent rounded-[4px]" />
           <h2 className="text-sm font-bold text-accent">측정 이력</h2>
@@ -90,10 +90,10 @@ export default function TrendGraph({data}: {data:IBiaData}) {
         </div>
       </div>
 
-      <div className="">
+      <div className="flex justify-center h-full items-center">
         <div className="">
           {/* 날짜 행 */}
-          <div className="grid grid-cols-[80px_repeat(7,1fr)] gap-2 mb-2">
+          <div className="grid grid-cols-[80px_repeat(7,1fr)] gap-2 mb-1">
             <div /> {/* 첫 칸 비우기 */}
             {Array.from({ length: 7 }).map((_, i) => (
               <div key={i} className="text-center text-[9px] text-gray-400 font-medium min-h-[12px]">
@@ -107,9 +107,9 @@ export default function TrendGraph({data}: {data:IBiaData}) {
             {CATEGORIES.map((cat) => (
               <div key={cat.id} className="grid grid-cols-[80px_repeat(7,1fr)] gap-0.5 items-center">
                 {/* 왼쪽 카테고리 라벨 */}
-                <div className="flex flex-col items-center justify-center bg-gray-100 rounded-sm h-[37px] text-center leading-tight">
-                  <span className="text-[10px] font-bold text-gray-700 leading-tight">{cat.label}</span>
-                  <span className="text-[8px] text-gray-500 font-medium">{cat.unit}</span>
+                <div className="flex flex-col items-center justify-center bg-gray-100 rounded-sm h-[28px] text-center leading-tight">
+                  <span className="text-[9px] font-bold text-gray-700 leading-tight">{cat.label}</span>
+                  <span className="text-[7px] text-gray-500 font-medium">({cat.unit})</span>
                 </div>
 
                 {/* 해결책: 항상 7번 루프를 돕니다 */}
@@ -118,7 +118,7 @@ export default function TrendGraph({data}: {data:IBiaData}) {
                   const data = TREND_DATA[cat.id as keyof typeof TREND_DATA]?.[i];
 
                   return data ? (
-                    <DataCell key={i} {...data} />
+                    <DataCell key={i} {...data} unit={cat.unit} />
                   ) : (
                     <div key={i} className="border-2 border-gray-200 rounded-sm h-full opacity-40" />
                   );

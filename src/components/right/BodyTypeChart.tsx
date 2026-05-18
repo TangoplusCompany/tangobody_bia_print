@@ -16,7 +16,7 @@ const myDotPosition = {
   return (
     <div className="flex flex-col px-2 w-full h-full">
       {/* 1. 타이틀 영역 */}
-      <div className="flex gap-2 items-center mb-6 text-accent font-bold">
+      <div className="flex gap-2 items-center mb-2 text-accent font-bold">
         <div className="w-3 h-3 rounded-[4px] bg-accent" />
         <div className="text-accent font-bold text-sm">
           바디 타입 세부 분석
@@ -24,18 +24,18 @@ const myDotPosition = {
       </div>
 
       {/* 2. 그래프 영역 (여기에 flex-1 추가!) */}
-      <div className="relative ml-8 mb-4">
+      <div className="relative ml-6 mb-2">
         
         {/* --- Y축 라벨 (BMI) --- */}
-        <div className="absolute -left-8 top-0 h-full text-[10px] text-sub-400">
-          <span className="absolute -top-4 left-1">BMI</span>
+        <div className="absolute -left-6 top-0 h-full text-[10px] text-sub-400">
+          <span className="absolute -top-2 left-1">BMI</span>
           <span className="absolute top-[25%] -translate-y-1/2">30.0</span>
           <span className="absolute top-[50%] -translate-y-1/2">25.0</span>
           <span className="absolute top-[75%] -translate-y-1/2">18.5</span>
         </div>
 
         {/* --- 메인 그리드 표 (h-[160px]를 h-full로 변경!) --- */}
-        <div className="grid grid-cols-3 grid-rows-4 w-full h-[180px] border border-sub-200 rounded-md text-[11px] text-sub-800 bg-white relative">
+        <div className="grid grid-cols-3 grid-rows-4 w-full h-[150px] border border-sub-200 rounded-md text-[11px] text-sub-800 bg-white relative">
           
           {/* Row 1 */}
           <div className="border-b border-r border-sub-200 flex items-center justify-center">우람한</div>
@@ -66,7 +66,7 @@ const myDotPosition = {
         </div>
 
         {/* --- X축 라벨 (체지방률) --- */}
-        <div className="absolute -bottom-1 left-0 w-full text-[10px] text-sub-400">
+        <div className="absolute -bottom-0.5 left-0 w-full text-[10px] text-sub-400">
           <span className="absolute left-[33.33%] -translate-x-1/2">10.0</span>
           <span className="absolute left-[66.66%] -translate-x-1/2">20.0</span>
           <span className="absolute right-0">체지방률</span>

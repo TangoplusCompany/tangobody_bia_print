@@ -58,8 +58,7 @@ export function CompositionCard({ title, weight, value, low, high, prevValue }: 
 
   return (
     <div className="flex h-full items-center gap-1 w-full ">
-      {/* 타이틀 박스 */}
-      <div className={`flex items-center h-full p-2 w-16 text-[10px] leading-tight font-bold text-white rounded-sm justify-center ${stateColor}`}>
+      <div className={`flex items-center h-full p-2 w-16 text-[12px] leading-tight font-bold text-white rounded-sm justify-center ${stateColor}`}>
         {title}
       </div>
 
@@ -106,7 +105,7 @@ export function CompositionCard({ title, weight, value, low, high, prevValue }: 
       </div>
 
       {/* 증감 표시 영역 */}
-      <div className={`flex h-full w-12 justify-center items-center bg-sub-100 rounded-sm text-[8px] font-medium ${diff !== undefined ? diffColor : 'text-transparent'}`}>
+      <div className={`flex h-full w-12 justify-center items-center bg-sub-100 rounded-sm text-[10px] font-medium ${diff !== undefined ? diffColor : 'text-transparent'}`}>
         {diff !== undefined && (
           <>({Number(diff) >= 0 ? '▲' : '▼'} {Math.abs(Number(diff))})</>
         )}
@@ -186,7 +185,7 @@ export default function Composition({data}: {data: IBiaData}) {
 
   ]
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-2">
       
       <div className="flex items-center gap-2 ">
         <div className="w-3 h-3 rounded-[4px] bg-accent" />
@@ -195,7 +194,7 @@ export default function Composition({data}: {data: IBiaData}) {
         </div>
       </div>
 
-      <div className="flex flex-col w-full gap-2">
+      <div className="flex flex-col my-2 h-full w-full gap-2">
         {/* 1. 상단 헤더 영역 (전체 너비를 사용하며 하단 카드들의 바 위치와 정렬) */}
         <div className="flex w-full items-center text-xs text-gray-500 font-bold">
           {/* 차트 너비만큼 비워주기 (차트 영역이 차지하는 너비에 맞춰 조정하세요) */}
@@ -226,14 +225,14 @@ export default function Composition({data}: {data: IBiaData}) {
 
           {/* 카드 리스트 컨테이너 (차트 높이에 맞춰 카드 간격이 자동 조절되도록 justify-between 사용 가능) */}
           <div className="flex flex-col flex-1 gap-1">
-            <div className="flex h-full items-center gap-1 w-full ">
+            <div className="flex items-center gap-1 w-full ">
               {/* 타이틀 박스 */}
-              <div className={`flex items-center justify-center h-full px-2 w-16 text-[8px] font-bold text-white rounded-sm bg-sub-400`}>
+              <div className={`flex items-center justify-center h-fit px-2 py-1 print:py-0 w-16 text-[8px] font-bold text-white rounded-sm bg-sub-400`}>
                 평균 비율
               </div>
 
               {/* 메인 데이터 영역 */}
-              <div className="flex h-fit flex-1 text-[8px] text-sub-600 pl-6 items-center bg-sub-100 rounded-sm px-2 gap-1">
+              <div className="flex h-fit flex-1 text-[8px] text-sub-600 pl-6 items-center bg-sub-100 rounded-sm px-2 py-1 print:py-0 gap-1">
                  체수분 : 55~65% / 단백질 : 15~18% / 무기질 : 5~6% / 체지방 :10~20%
               </div>
             </div>
@@ -252,7 +251,7 @@ export default function Composition({data}: {data: IBiaData}) {
         </div>
       </div>
 
-      <div className="flex gap-2 h-10 mt-2 px-4 bg-sub-100 border border-sub-200 rounded-md items-center ">
+      <div className="flex gap-2 h-12 px-4 bg-sub-100 border border-sub-200 rounded-md items-center ">
           <span className="font-bold text-sub-800 text-xs text-center">{title}</span>
           <span className="text-sub-800 text-[10px] leading-none">{description}</span>
       </div>
