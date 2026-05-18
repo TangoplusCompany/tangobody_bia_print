@@ -26,13 +26,6 @@ export function CompositionCard({ title, weight, value, low, high, prevValue }: 
   }[title];
 
   const percentage = ((value / weight) * 100).toFixed(1);
-
-  /**
-   * 인바디 스타일 계산 로직
-   * 1구간(이하): 0 ~ 33.3%
-   * 2구간(표준): 33.3% ~ 66.6% (범위: high - low)
-   * 3구간(이상): 66.6% ~ 100% (표준 범위의 너비만큼을 33.3%로 계산)
-   */
   const calculatePosition = (val: number) => {
     if (val <= 0) return 0;
     
@@ -169,7 +162,6 @@ export default function Composition({data}: {data: IBiaData}) {
       prevValue: data.most_previous_data.body_fat_mass
     },
   ];
-  console.log(mainComps)
   const donutComps : SegmentData[] = [
     {
       label: "체수분",
@@ -197,7 +189,7 @@ export default function Composition({data}: {data: IBiaData}) {
     <div className="flex flex-col">
       
       <div className="flex items-center gap-2 ">
-        <div className="w-3 h-3 rounded-sm bg-accent" />
+        <div className="w-3 h-3 rounded-[4px] bg-accent" />
         <div className="text-accent text-sm font-bold ">
           체성분 & 체수분 밸런스
         </div>

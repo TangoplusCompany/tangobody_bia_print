@@ -61,7 +61,7 @@ export default function Recommend({data}: {data: IRecommend}) {
 
       <div className="grid grid-rows-3 h-full">
         {types.map( (type) => (
-          <RecommendCard type={type.type} title={type.title} description={type.description} />
+          <RecommendCard key={type.title} type={type.type} title={type.title} description={type.description} />
         )
 
         )}

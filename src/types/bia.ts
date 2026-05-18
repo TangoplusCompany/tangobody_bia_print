@@ -21,6 +21,30 @@ export interface IPrevious {
   amount_of_inorganic_salt_std_min: number;
   amount_of_inorganic_salt_std_max: number;
   skeletal_muscle_mass_index: number;
+
+  right_hand_fat_mass: number;
+  left_hand_fat_mass: number;
+  trunk_fat_mass: number;
+  right_foot_fat_mass: number;
+  left_foot_fat_mass: number;
+  
+  right_hand_fat_percentage: number;
+  left_hand_fat_percentage: number;
+  trunk_fat_percentage: number;
+  right_foot_fat_percentage: number;
+  left_foot_fat_percentage: number;
+
+  right_hand_muscle_mass: number;
+  left_hand_muscle_mass: number;
+  trunk_muscle_mass: number;
+  right_foot_muscle_mass: number;	
+  left_foot_muscle_mass: number;	
+  right_hand_muscle_ratio: number;
+  left_hand_muscle_ratio: number;
+  trunk_muscle_ratio: number;
+  right_foot_muscle_ratio: number;
+  left_foot_muscle_ratio: number;
+  
 }
 
 export interface IBiaPreviousData {

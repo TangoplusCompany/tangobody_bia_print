@@ -22,9 +22,9 @@ function App() {
   const encryptData = async () => {
     
     // const cryptoData = {
-    //   sn: 2244,
-    //   user_uuid: "HXZ13AE6NNXXA6N6",
-    //   receiver: "01041579173",
+    //   sn: 2329,
+    //   user_uuid: "QAAYA6RDBKSJQRA2",
+    //   receiver: "01025248218",
     // };
     // const encryptData = await actionPrintEncrypt(cryptoData);
     // console.log(encryptData)
@@ -88,7 +88,7 @@ function App() {
           {/* 🥘🥘🥘🥘 left 🥘🥘🥘🥘 */}
           <div className='grid grid-rows-[25%_25%_25%_25%] w-2/3 mr-2'>
             <Composition data={data} />
-            <MainAnalysis data={data} prevMuscleMassIndex={6.5}/>
+            <MainAnalysis data={data} prevMuscleMassIndex={data?.most_previous_data.skeletal_muscle_mass_index}/>
             <BodyModel data={data}  />
             <TrendGraph data={data} />
           </div>

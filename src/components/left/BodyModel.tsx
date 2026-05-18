@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import img_body from "@/assets/img_body.png"
 import type { IBiaData } from "@/types/bia";
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart, ResponsiveContainer } from "recharts";
+import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer } from "recharts";
 
 
 
-export function PentagonChart({ data }: { data: any[] }) {
+export function PentagonChart({ data, isMuscle }: { data: any[]; isMuscle: boolean }) {
 
-
+  
   const CustomAngleAxis = ({ payload, x, y }: any) => {
     const item = data.find((d) => d.subject === payload.value);
     if (!item) return null;
-
+    
     return (
       /* g 태그의 위치를 꼭짓점(x, y)으로 고정하고 내부 요소들을 중앙 정렬합니다. */
       <g transform={`translate(${x},${y})`} style={{ overflow: 'visible' }}>
@@ -32,7 +32,7 @@ export function PentagonChart({ data }: { data: any[] }) {
           fill="#666"
           dy="1" 
         >
-          <tspan fontSize="9">{item.weight}</tspan>
+          <tspan fontSize="9">{item.weight}kg</tspan>
           <tspan fontSize="7" fill="#999" >{` (${item.percent})`}</tspan>
         </text>
 
@@ -55,7 +55,7 @@ export function PentagonChart({ data }: { data: any[] }) {
       </g>
     );
   };
-
+  const maxValue = isMuscle ? 150 : 300; // 지방일 경우 300~350 설정
   return (
     <div className='relative flex-1 w-full min-h-0 flex justify-center items-center'>
 
@@ -68,6 +68,10 @@ export function PentagonChart({ data }: { data: any[] }) {
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="65%" data={data}>
             <PolarGrid gridType="polygon" stroke="#DBDBDB" />
+
+            {/* 최대값을 300으로 고정 (수치와 선은 숨김 처리) */}
+            <PolarRadiusAxis domain={[0, maxValue]} tick={false} axisLine={false} />
+
             <Radar
               name="근육량"
               dataKey="lastValue"
@@ -87,7 +91,6 @@ export function PentagonChart({ data }: { data: any[] }) {
               dataKey="subject"
               tick={(props) => <CustomAngleAxis {...props} />}
             />
-            
           </RadarChart>
         </ResponsiveContainer>
       </div>
@@ -106,20 +109,90 @@ export default function BodyModel({data} : {data: IBiaData}) {
 
     return statusMap[status] ?? "데이터 없음";
   };
-  console.log(data)
   const muscleData = [
-    { subject: "복부", value: 100, lastValue: 80, fullMark: 150, weight: data.trunk_muscle_mass, percent: data.trunk_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_trunk) },
-    { subject: "왼팔", value: 88, lastValue: 100, fullMark: 150, weight: data.left_hand_muscle_mass, percent: data.left_hand_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_left_hand) },
-    { subject: "왼다리", value: 76, lastValue: 90, fullMark: 150, weight: data.left_foot_muscle_mass, percent: data.left_foot_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_left_foot) },
-    { subject: "오른다리", value: 99, lastValue: 50, fullMark: 150, weight: data.right_foot_muscle_mass, percent: data.right_foot_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_right_foot) },
-    { subject: "오른팔", value: 85, lastValue: 90, fullMark: 150, weight: data.right_hand_muscle_mass, percent: data.right_hand_muscle_ratio + "%", status: getStatusLabel(data.muscle_std_right_hand) },
+    { subject: "복부", 
+      value: data.trunk_muscle_ratio, 
+      lastValue: data.most_previous_data.trunk_muscle_ratio,
+      fullMark: 150, 
+      weight: data.trunk_muscle_mass, 
+      percent: data.trunk_muscle_ratio + "%", 
+      status: getStatusLabel(data.muscle_std_trunk)
+    },
+    { subject: "왼팔", 
+      value: data.left_hand_muscle_ratio, 
+      lastValue: data.most_previous_data.left_hand_muscle_ratio,
+      fullMark: 150, 
+      weight: data.left_hand_muscle_mass, 
+      percent: data.left_hand_muscle_ratio + "%", 
+      status: getStatusLabel(data.muscle_std_left_hand)
+    },
+    { subject: "왼다리", 
+      value: data.left_foot_muscle_ratio, 
+      lastValue: data.most_previous_data.left_foot_muscle_ratio,
+      fullMark: 150, 
+      weight: data.left_foot_muscle_mass, 
+      percent: data.left_foot_muscle_ratio + "%", 
+      status: getStatusLabel(data.muscle_std_left_foot) 
+    },
+    { subject: "오른다리", 
+      value: data.right_foot_muscle_ratio, 
+      lastValue: data.most_previous_data.right_foot_muscle_ratio,
+      fullMark: 150, 
+      weight: data.right_foot_muscle_mass, 
+      percent: data.right_foot_muscle_ratio + "%", 
+      status: getStatusLabel(data.muscle_std_right_foot) 
+    },
+    { subject: "오른팔", 
+      value: data.right_hand_muscle_ratio, 
+      lastValue: data.most_previous_data.right_hand_muscle_ratio,
+      fullMark: 150, 
+      weight: data.right_hand_muscle_mass, 
+      percent: data.right_hand_muscle_ratio + "%", 
+      status: getStatusLabel(data.muscle_std_right_hand) 
+    },
   ];
+
   const fatData = [
-    { subject: "복부", value: 100, lastValue: 80, fullMark: 150, weight: data.trunk_fat_mass, percent: data.trunk_fat_percentage + "%", status: getStatusLabel(data.fat_std_trunk) },
-    { subject: "왼팔", value: 88, lastValue: 100, fullMark: 150, weight: data.left_hand_fat_mass, percent: data.left_hand_fat_percentage + "%", status: getStatusLabel(data.fat_std_left_hand) },
-    { subject: "왼다리", value: 76, lastValue: 90, fullMark: 150, weight: data.left_foot_fat_mass, percent: data.left_foot_fat_percentage + "%", status: getStatusLabel(data.fat_std_left_foot) },
-    { subject: "오른다리", value: 99, lastValue: 50, fullMark: 150, weight: data.right_foot_fat_mass, percent: data.right_foot_fat_percentage + "%", status: getStatusLabel(data.fat_std_right_foot) },
-    { subject: "오른팔", value: 85, lastValue: 90, fullMark: 150, weight: data.right_hand_fat_mass, percent: data.right_hand_fat_percentage + "%", status: getStatusLabel(data.fat_std_right_hand) },
+    { subject: "복부", 
+      value: data.trunk_fat_percentage, 
+      lastValue: data.most_previous_data.trunk_fat_percentage,
+      fullMark: 350, 
+      weight: data.trunk_fat_mass, 
+      percent: data.trunk_fat_percentage + "%", 
+      status: getStatusLabel(data.fat_std_trunk)
+    },
+    { subject: "왼팔", 
+      value: data.left_hand_fat_percentage, 
+      lastValue: data.most_previous_data.left_hand_fat_percentage,
+      fullMark: 300, 
+      weight: data.left_hand_fat_mass, 
+      percent: data.left_hand_fat_percentage + "%", 
+      status: getStatusLabel(data.fat_std_left_hand) 
+    },
+    { subject: "왼다리", 
+      value: data.left_foot_fat_percentage, 
+      lastValue: data.most_previous_data.left_foot_fat_percentage,
+      fullMark: 300, 
+      weight: data.left_foot_fat_mass, 
+      percent: data.left_foot_fat_percentage + "%", 
+      status: getStatusLabel(data.fat_std_left_foot) 
+    },
+    { subject: "오른다리", 
+      value: data.right_foot_fat_percentage, 
+      lastValue: data.most_previous_data.right_foot_fat_percentage,
+      fullMark: 300, 
+      weight: data.right_foot_fat_mass, 
+      percent: data.right_foot_fat_percentage + "%", 
+      status: getStatusLabel(data.fat_std_right_foot) 
+    },
+    { subject: "오른팔", 
+      value: data.right_hand_fat_percentage, 
+      lastValue: data.most_previous_data.right_hand_fat_percentage,
+      fullMark: 300, 
+      weight: data.right_hand_fat_mass, 
+      percent: data.right_hand_fat_percentage + "%", 
+      status: getStatusLabel(data.fat_std_right_hand) 
+    },
 
   ];
 
@@ -129,12 +202,12 @@ export default function BodyModel({data} : {data: IBiaData}) {
       <div className='flex flex-col gap-1 w-full h-full'>
         <div className='flex justify-between '>
           <div className='flex gap-1 pl-1 pt-1 items-center'>
-            <div className='w-3 h-3 rounded-sm bg-accent' />
+            <div className='w-3 h-3 rounded-[4px] bg-accent' />
             <span className='text-accent font-bold text-sm'>근육 분포</span>
           </div>
         </div>
         
-        <PentagonChart data={muscleData} />
+        <PentagonChart data={muscleData} isMuscle={true} />
 
 
       </div>
@@ -142,13 +215,13 @@ export default function BodyModel({data} : {data: IBiaData}) {
       <div className='flex flex-col gap-1 w-full h-full'>
         <div className='flex justify-between '>
           <div className='flex gap-1 pl-1 pt-1 items-center'>
-            <div className='w-3 h-3 rounded-sm bg-accent' />
+            <div className='w-3 h-3 rounded-[4px] bg-accent' />
             <span className='text-accent font-bold text-sm'>지방 분포</span>
           </div>
         </div>
 
 
-        <PentagonChart data={fatData} />
+        <PentagonChart data={fatData} isMuscle={false} />
       </div>
 
     </div>

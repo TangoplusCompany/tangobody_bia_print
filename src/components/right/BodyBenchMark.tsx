@@ -1,5 +1,14 @@
 import type { IBodyBenchmark } from '@/types/bia';
-import fat from '../../assets/img_index_fat.png';
+import bt1 from '../../assets/bt_1.png';
+import bt2 from '../../assets/bt_2.png';
+import bt3 from '../../assets/bt_3.png';
+import bt4 from '../../assets/bt_4.png';
+import bt5 from '../../assets/bt_5.png';
+import bt6 from '../../assets/bt_6.png';
+import bt7 from '../../assets/bt_7.png';
+import bt8 from '../../assets/bt_8.png';
+import bt9 from '../../assets/bt_9.png';
+
 
 interface MetricItem {
   label: string;
@@ -47,52 +56,67 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (data.body_score / 100) * circumference;
   const healthMetrics = [
-      { label: "목표 체중", value: data.target_weight, unit: "kg" },
-      { label: "지방 조절량", value: data.fat_control_amount, unit: "kg" },
-      { label: "근육 조절량", value: data.muscle_control, unit: "kg" },
-      { label: "권장섭취열량", value: data.recommended_intake_kcal, unit: "kcal" },
-      { label: "제지방량", value: data.lean_body_weight, unit: "kg" },
-      { label: "근육량", value: data.muscle_mass, unit: "kg" },
-      { label: "골량", value: data.bone_mass, unit: "kg" },
-      { label: "세포질량", value: data.body_cell_mass, unit: "kg" },
-      { label: "복부/내장지방 관련", value: data.waist_to_hip_ratio, unit: "" },
-      { label: "표준 체중 대비 체중 비율", value: data.obesity_percentage, unit: "%" },
-      { label: "피하지방", value: data.subcutaneous_fat_rate, unit: "%" },
-    ];
+    { label: "목표 체중", value: data.target_weight, unit: "kg" },
+    { label: "지방 조절량", value: data.fat_control_amount, unit: "kg" },
+    { label: "근육 조절량", value: data.muscle_control, unit: "kg" },
+    { label: "권장섭취열량", value: data.recommended_intake_kcal, unit: "kcal" },
+    { label: "제지방량", value: data.lean_body_weight, unit: "kg" },
+    { label: "근육량", value: data.muscle_mass, unit: "kg" },
+    { label: "골량", value: data.bone_mass, unit: "kg" },
+    { label: "세포질량", value: data.body_cell_mass, unit: "kg" },
+    { label: "복부/내장지방 관련", value: data.waist_to_hip_ratio, unit: "" },
+    { label: "표준 체중 대비 체중 비율", value: data.obesity_percentage, unit: "%" },
+    { label: "피하지방", value: data.subcutaneous_fat_rate, unit: "%" },
+  ];
 
-    const bodyType = {
-      0: "마른형",
-      1: "비만형",
-      2: "경도비만형",
-      3: "중도비만형",
-      4: "고도비만형",
-      5: "마른비만형"
-    }[data.body_type]
+  const bodyType = {
+    1: "마른형",
+    2: "슬림 근육형",
+    3: "근육형",
+    4: "비만형",
+    5: "살집 있는 근육형",
+    6: "근육질 비만형 ",
+    7: "운동 부족형",
+    8: "표준형",
+    9: "표준 근육형"
+  }[data.body_type]
+
+  const bodyTypeImg = {
+    1: bt1,
+    2: bt2,
+    3: bt3,
+    4: bt4,
+    5: bt5,
+    6: bt6,
+    7: bt7,
+    8: bt8,
+    9: bt9
+  }[data.body_type]
   return (
     <div className='flex flex-col'>
       <div className='flex w-fit bg-accent rounded-br-xl rounded-tl-xl text-base text-white font-semibold px-2 py-1'>
         주요건강 지표
       </div>
 
-      {/* circle */}
+     
       <div className="flex justify-center items-center py-6 relative">
         <svg
           height={radius * 2}
           width={radius * 2}
-          className="transform -rotate-90" // 12시 방향부터 시작하도록 회전
+          className="transform -rotate-90" 
         >
-          {/* 배경 트랙 (회색) */}
+          
           <circle
-            stroke="#E5E7EB" // 또는 'bg-sub-200' 색상
+            stroke="#E5E7EB" 
             fill="transparent"
             strokeWidth={strokeWidth}
             r={normalizedRadius}
             cx={radius}
             cy={radius}
           />
-          {/* 진행 바 (파란색) */}
+          
           <circle
-            stroke="#5D8DFF" // 'bg-accent' 색상
+            stroke="#5D8DFF" 
             fill="transparent"
             strokeWidth={strokeWidth}
             strokeDasharray={circumference + ' ' + circumference}
@@ -104,7 +128,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
           />
         </svg>
         
-        {/* 중앙 점수 텍스트 */}
+        
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex items-baseline">
             <span className="text-5xl font-bebas font-bold text-gray-600 leading-none">
@@ -119,7 +143,7 @@ export default function BodyBenchMark({data}: {data: IBodyBenchmark}) {
       <div className='flex flex-1 flex-col gap-2 px-2'>
         <div className='flex gap-2'>
           <img 
-            src={fat}
+            src={bodyTypeImg}
             alt='건강지표이미지'
             className='rounded-2xl w-12 h-12 my-auto border-2 border-sub-200/60'
           >
