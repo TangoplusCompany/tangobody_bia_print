@@ -69,7 +69,6 @@ const DataCell = ({ value, diff, status, up }: { value: string, diff: string, st
 
 export default function TrendGraph({data}: {data:IBiaData}) {
   const dates = data.history_data.map((data) => data.measure_date)
-  console.log(dates)
   const sortedHistory = [...data.history_data].reverse();
   const TREND_DATA = {
     score: transformToTrend(sortedHistory, 'body_score'),
